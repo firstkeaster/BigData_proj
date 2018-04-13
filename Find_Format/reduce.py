@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-##cat open.csv park.csv | python map1.py | sort -n | python reduce1.py
 import sys
 import string
 import numpy
