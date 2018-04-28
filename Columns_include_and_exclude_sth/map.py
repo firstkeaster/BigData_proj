@@ -12,7 +12,7 @@ import time
 splitter='\t'
 divider=', '
 
-parser = argparse.ArgumentParser(description='PyTorch Wikitext-2 RNN/LSTM Language Model')
+parser = argparse.ArgumentParser(description='Col_In_Ex')
 parser.add_argument('--include', type=list, default=[],
                     help='items which some cols should include')
 parser.add_argument('--exclude', type=list, default=[],
