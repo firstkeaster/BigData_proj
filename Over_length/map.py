@@ -29,16 +29,18 @@ for line in sys.stdin:
     entry = csv.reader([line],delimiter=',')
     entry=list(entry)[0]
     col.append(len(str(entry[column])))
-    sum_var+=col[i]**col[i]
+    sum_var+=col[i]**2
     sum_valu+=col[i]
     i+=1
     
-line_count=i
-var=(sum_var-(sum_valu**sum_valu)/line_count)/line_count
+line_count=float(i)
+print(line_count,sum_var,sum_valu)
+var=(sum_var-(sum_valu**2)/line_count)/line_count
+print(var)
 mean=sum_valu/line_count
-thre_upper=mean+4*var
-thre_lower=mean-4*var
+thre_upper=mean+0.2*var
+thre_lower=mean-0.2*var
 
 for j in range(len(col)):
     if col[j]>=thre_upper or col[j]<=thre_lower:
-        print(a[j,column])
+        print(j)
