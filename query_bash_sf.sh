@@ -6,34 +6,53 @@ echo I got $varname
 echo dataset?
 read data
 echo I got $data
-module load python/gnu/3.4.4
 
-if [ "$varname" == All_Unique ]
+if [ "$varname" == Over_Length ]
 then
-	/usr/bin/hadoop fs -rm -r -f "All_Unique.out"
-	MAPPER=$(echo "All_Unique"/*map*.py)
-	REDUCER=$(echo "All_Unique"/*reduce*.py)
-	/usr/bin/hadoop jar /opt/cloudera/parcels/CDH/lib/hadoop-mapreduce/hadoop-streaming.jar -D mapreduce.job.reduces=1 -files "All_Unique/" -mapper "$MAPPER" -reducer "$REDUCER" -input "$data" -output "All_Unique.out" 
-	/usr/bin/hadoop fs -getmerge "All_Unique.out" "All_Unique/All_Unique.out"	
-	#cat "task_ff/task_fftmp.out" | sort -n > "task_ff/task_fftmp.out"            
+    echo column?
+    read column
 fi
 
 if [ "$varname" == Columns_in_ex ]
 then
-	/usr/bin/hadoop fs -rm -r -f "Columns_in_ex.out"
-	MAPPER=$(echo "Columns_in_ex"/*map*.py)
-	REDUCER=$(echo "Columns_in_ex"/*reduce*.py)
-	/usr/bin/hadoop jar /opt/cloudera/parcels/CDH/lib/hadoop-mapreduce/hadoop-streaming.jar -D mapreduce.job.reduces=1 -files "Columns_in_ex/" -mapper "$MAPPER" -reducer "$REDUCER" -input "$data" -output "Columns_in_ex.out" 
-	/usr/bin/hadoop fs -getmerge "Columns_in_ex.out" "Columns_in_ex/Columns_in_ex.out"	
-	#cat "task_ff/task_fftmp.out" | sort -n > "task_ff/task_fftmp.out"            
+    echo columns include?
+    read include
+    echo columns exclude?
+    read exclude
 fi
 
-if [ "$varname" == Over_length ]
+if [ "$varname" == Value_Far ]
 then
-	/usr/bin/hadoop fs -rm -r -f "Over_length.out"
-	MAPPER=$(echo "Columns_in_ex"/*map*.py)
-	REDUCER=$(echo "Columns_in_ex"/*reduce*.py)
-	/usr/bin/hadoop jar /opt/cloudera/parcels/CDH/lib/hadoop-mapreduce/hadoop-streaming.jar -D mapreduce.job.reduces=1 -files "Over_length/" -mapper "$MAPPER" -reducer "$REDUCER" -input "$data" -output "Over_length.out" 
-	/usr/bin/hadoop fs -getmerge "Over_length.out" "Over_length/Over_length.out"	
-	#cat "task_ff/task_fftmp.out" | sort -n > "task_ff/task_fftmp.out"            
+    echo column?
+    read column
+    echo your range?
+    read range
+fi
+
+module load python/gnu/3.4.4
+
+
+
+if [ "$varname" == Columns_in_ex ]
+then
+    rm -r "C_I_E_out.csv"
+    python Columns_in_ex/Columns_in_ex.py --filedir "$data" --include "$include" --exclude "$exclude"
+fi
+
+if [ "$varname" == Value_Far ]
+then
+    rm -r "V_F_out.csv"
+    python Value_Far/Value_Far.py --filedir "$data" --column "$column" --range "$range"
+fi
+
+if [ "$varname" == All_Unique ]
+then
+    rm -r "A_U_out.csv"
+    python All_Unique/All_Unique.py --filedir "$data"
+fi
+
+if [ "$varname" == Over_Length ]
+then
+    rm -r "O_L_out.csv"
+    python Over_length/Over_length.py --filedir "$data" --column "$column" --range "$range"
 fi
