@@ -7,6 +7,14 @@ echo dataset?
 read data
 echo I got $data
 
+
+
+if [ "$varname" == SP_Char ]
+then
+    rm -r "S_P_C_out.csv"
+    python SP_Char/SP_Char.py --filedir "$data"
+fi
+
 if [ "$varname" == Over_Length ]
 then
     echo column?
