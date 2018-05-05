@@ -15,7 +15,6 @@ echo '|_____/ \__,_|\__\__,_|  \___\_\\__,_|\___|_|   \__, | |_____/ \__,_|___/_
 echo '                                                 __/ |                                                     '
 echo '                                                |___/                                                      '
 
-# Ask the user for their name
 echo '#Candidate Query:'
 echo '#find_format'
 echo '#high_freq'
@@ -26,11 +25,11 @@ echo '#Columns_in_ex'
 echo '#Value_Far'
 echo '#SP_Char'
 echo '#All_Unique'
-# Ask the user for their name
+
 echo -Hello, which type of query do you want?
 read varname
 echo -I got $varname
-echo -dataset?
+echo -Which dataset?
 read data
 echo -I got $data
 
@@ -59,8 +58,7 @@ then
 fi
 
 module load python/gnu/3.4.4
-#Running query
-#Task_Freq
+module load spark/2.2.0
 
 if [ "$varname" == find_format ]
 then
@@ -68,8 +66,7 @@ then
     MAPPER=$(echo "task_ff"/*map*.py)
     REDUCER=$(echo "task_ff"/*reduce*.py)
     /usr/bin/hadoop jar /opt/cloudera/parcels/CDH/lib/hadoop-mapreduce/hadoop-streaming.jar -D mapreduce.job.reduces=1 -files "task_ff/" -mapper "$MAPPER" -reducer "$REDUCER" -input "$data" -output "task_fftmp.out" 
-    /usr/bin/hadoop fs -getmerge "task_fftmp.out" "task_ff/task_fftmp.out"	
-    #cat "task_ff/task_fftmp.out" | sort -n > "task_ff/task_fftmp.out"            
+    /usr/bin/hadoop fs -getmerge "task_fftmp.out" "task_ff/task_fftmp.out"	          
 fi
 
 if [ "$varname" == high_freq ]
