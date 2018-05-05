@@ -16,6 +16,7 @@ echo '                                                 __/ |                    
 echo '                                                |___/                                                      '
 
 echo '#Candidate Query:'
+echo '#basic_stat'
 echo '#find_format'
 echo '#high_freq'
 echo '#inter_column'
