@@ -77,7 +77,13 @@ then
     /usr/bin/hadoop fs -getmerge "out.csv" "task_freq/out.csv"        
 fi
 
-#Task_inter
+if [ "$varname" == basic_stat ]
+then
+	/usr/bin/hadoop fs -rm -r "task_stat.out"
+	SPARKCODE=$(echo "task_stat/task_stat".py)
+	spark-submit --conf spark.pyspark.python=/share/apps/python/3.4.4/bin/python "$SPARKCODE" "$data"
+	/usr/bin/hadoop fs -getmerge "task_stat.out" "task_stat/task_stat.out"        
+fi
 
 if [ "$varname" == inter_column ]
 then
