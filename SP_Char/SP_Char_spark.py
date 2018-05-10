@@ -28,7 +28,7 @@ for i in cols:
     list_cal=table.select(i).rdd.flatMap(lambda x:x).collect()
     set_sp=set()
     for j in list_cal:
-        set_sp=set_sp.union(set(j)&sp_char)
+        set_sp=set_sp.union(set(str(j))&sp_char)
     dict_cal[i]=set_sp
 
 sigsig=0
