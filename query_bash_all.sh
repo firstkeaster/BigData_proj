@@ -102,6 +102,45 @@ then
     /usr/bin/hadoop fs -getmerge "out.csv" "key_search/out.csv"        
 fi
 
+if [ "$varname" == SP_Char_ ]
+then
+    /usr/bin/hadoop fs -rm -r "S_P_C_out.csv"
+    SPARKCODE=$(echo "SP_Char/SP_Char_spark".py)
+    spark-submit --conf spark.pyspark.python=/share/apps/python/3.4.4/bin/python "$SPARKCODE" "$data"
+    /usr/bin/hadoop fs -getmerge "S_P_C_out.csv" "SP_Char/S_P_C_out.csv"  
+fi
+
+if [ "$varname" == Columns_in_ex_ ]
+then
+    /usr/bin/hadoop fs -rm -r "C_I_E_out.csv"
+    SPARKCODE=$(echo "Columns_in_ex/Columns_in_ex_spark".py)
+    spark-submit --conf spark.pyspark.python=/share/apps/python/3.4.4/bin/python "$SPARKCODE" "$data" "$include" "$exclude"
+    /usr/bin/hadoop fs -getmerge "C_I_E_out.csv" "Columns_in_ex/C_I_E_out.csv"  
+fi
+
+if [ "$varname" == Value_Far_ ]
+then
+    /usr/bin/hadoop fs -rm -r "V_F_out.csv"
+    SPARKCODE=$(echo "Value_Far/Value_Far_spark".py)
+    spark-submit --conf spark.pyspark.python=/share/apps/python/3.4.4/bin/python "$SPARKCODE" "$data" "$column" "$range"
+    /usr/bin/hadoop fs -getmerge "V_F_out.csv" "Value_Far/V_F_out.csv"  
+fi
+
+if [ "$varname" == All_Unique_ ]
+then
+    /usr/bin/hadoop fs -rm -r "A_U_out.csv"
+    SPARKCODE=$(echo "All_Unique/All_Unique_spark".py)
+    spark-submit --conf spark.pyspark.python=/share/apps/python/3.4.4/bin/python "$SPARKCODE" "$data"
+    /usr/bin/hadoop fs -getmerge "A_U_out" "All_Unique/A_U_out.csv"  
+fi
+
+if [ "$varname" == Over_Length_ ]
+then
+    /usr/bin/hadoop fs -rm -r "O_L_out.csv"
+    SPARKCODE=$(echo "Over_length/Over_length_spark".py)
+    spark-submit --conf spark.pyspark.python=/share/apps/python/3.4.4/bin/python "$SPARKCODE" "$data" "$column" "$range"
+    /usr/bin/hadoop fs -getmerge "O_L_out.csv" "Over_length/O_L_out.csv"  
+fi
 #Task_etc
 
 if [ "$varname" == SP_Char ]
