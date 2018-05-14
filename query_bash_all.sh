@@ -101,12 +101,22 @@ then
 	/usr/bin/hadoop fs -getmerge "task_stat.out" "task_stat/task_stat.out"        
 fi
 
-if [ "$varname" == inter_column ]
+if [ "$varname" == intersection_query ]
 then
     /usr/bin/hadoop fs -rm -r "out.csv"
-    SPARKCODE=$(echo "inter_column/inter_column".py)
-    spark-submit --conf spark.pyspark.python=/share/apps/python/3.4.4/bin/python "$SPARKCODE" "$data"
-    /usr/bin/hadoop fs -getmerge "out.csv" "inter_column/out.csv"        
+    SPARKCODE=$(echo "intersection_query/spark".py)
+    spark-submit --conf spark.pyspark.python=/share/apps/python/3.4.4/bin/python "$SPARKCODE" "$data" "$column"
+    /usr/bin/hadoop fs -getmerge "out.csv" "intersection_query/out.csv"        
+fi
+
+
+
+if [ "$varname" == foreign_key ]
+then
+    /usr/bin/hadoop fs -rm -r "out.csv"
+    SPARKCODE=$(echo "foreign_key/spark".py)
+    spark-submit --conf spark.pyspark.python=/share/apps/python/3.4.4/bin/python "$SPARKCODE" "$data" "$data2"
+    /usr/bin/hadoop fs -getmerge "out.csv" "foreign_key/out.csv"        
 fi
 
 if [ "$varname" == key_search ]
