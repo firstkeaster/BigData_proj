@@ -19,13 +19,15 @@ echo '#Candidate Query:'
 echo '#basic_stat'
 echo '#find_format'
 echo '#high_freq'
-echo '#inter_column'
+echo '#intersection_query'
 echo '#key_search'
+echo '#foreign_key'
 echo '#Over_Length'
 echo '#Columns_in_ex'
 echo '#Value_Far'
 echo '#SP_Char'
 echo '#All_Unique'
+
 
 echo -Hello, which type of query do you want?
 read varname
@@ -56,6 +58,19 @@ then
     read column
     echo -your range?
     read range
+fi
+
+if [ "$varname" == intersection_query ]
+then
+    echo -columns?
+    read column
+fi
+
+if [ "$varname" == foreign_key ]
+then
+    echo -dataset2?
+    read data2
+    echo -I got $data2
 fi
 
 module load python/gnu/3.4.4
